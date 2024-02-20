@@ -1,0 +1,40 @@
+---
+import type { Block, RichText } from "@lib/interfaces";
+import Caption from "./Caption.astro";
+import { codeToHtml } from "shiki";
+import { SITE } from "@config";
+
+export interface Props {
+  block: Block;
+}
+
+const { block } = Astro.props;
+
+const code = block.Code.RichTexts.map(
+  (richText: RichText) => richText.Text.Content
+).join("");
+const language = block.Code.Language.toLowerCase();
+const codeWithSyntaxHighlightHtml = await codeToHtml(code, {
+  lang: language,
+  theme: SITE.shikiTheme,
+});
+---
+
+<div class="code">
+  <div>
+    {
+      /* prettier-ignore */
+      language === 'mermaid' ? (
+        <pre class="mermaid">{code}</pre>
+      ) : (
+          <div set:html={codeWithSyntaxHighlightHtml} />
+      )
+    }
+  </div>
+  <Caption richTexts={block.Code.Caption} />
+</div>
+
+<script>
+  import mermaid from "mermaid";
+  mermaid.initialize({ startOnLoad: true });
+</script>

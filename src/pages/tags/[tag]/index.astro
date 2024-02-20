@@ -1,0 +1,41 @@
+---
+import TagPosts from "@layouts/TagPosts.astro";
+import getPostsByTag from "@utils/getPostsByTag";
+import getPagination from "@utils/getPagination";
+import { getNotionCollection, getNotionTags } from "@lib/notion/client";
+
+export async function getStaticPaths() {
+  // // Astro
+  // const posts = await getCollection("blog");
+  // const tags = getUniqueTags(posts);
+
+  // Notion
+  const notionPosts = await getNotionCollection();
+  const notionTags = await getNotionTags();
+
+  // Combine
+  const allPosts = notionPosts;
+  const allTags = notionTags.filter(
+    (value, index, array) => array.map(t => t.tag).indexOf(value.tag) === index
+  );
+
+  return allTags.map(({ tag, tagName }) => {
+    return {
+      params: { tag },
+      props: { tag, tagName, posts: allPosts },
+    };
+  });
+}
+
+const { tag, tagName, posts } = Astro.props;
+
+const postsByTag = getPostsByTag(posts, tag);
+
+const pagination = getPagination({
+  posts: postsByTag,
+  page: 1,
+  isIndex: true,
+});
+---
+
+<TagPosts {...pagination} {tag} {tagName} />

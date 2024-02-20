@@ -1,0 +1,63 @@
+---
+import type { Block, RichText as RichTextType } from "../../lib/interfaces.ts";
+import { buildHeadingId } from "../../lib/blog-helpers.ts";
+import RichText from "./RichText.astro";
+import NotionBlocks from "../NotionBlocks.astro";
+
+export interface Props {
+  block: Block;
+  headings: Block[];
+}
+
+const { block, headings } = Astro.props;
+
+const id = buildHeadingId(block.Heading2);
+---
+
+{
+  block.Heading2.IsToggleable ? (
+    <details class="toggle">
+      <summary>
+        <a href={`#${id}`} id={id}>
+          <h3>
+            {block.Heading2.RichTexts.map((richText: RichTextType) => (
+              <RichText richText={richText} />
+            ))}
+          </h3>
+        </a>
+      </summary>
+      <div>
+        {block.Heading2.Children && (
+          <NotionBlocks blocks={block.Heading2.Children} headings={headings} />
+        )}
+      </div>
+    </details>
+  ) : (
+    <a href={`#${id}`} id={id}>
+      <h3>
+        {block.Heading2.RichTexts.map((richText: RichTextType) => (
+          <RichText richText={richText} />
+        ))}
+      </h3>
+    </a>
+  )
+}
+
+<style>
+  details.toggle {
+    @apply block mt-4 sm:mt-6;
+  }
+
+  details.toggle > summary {
+    @apply cursor-pointer;
+  }
+
+  details.toggle > summary > a,
+  details.toggle > summary > a > h3 {
+    @apply inline;
+  }
+
+  details.toggle > div {
+    @applh ml-8;
+  }
+</style>

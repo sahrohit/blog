@@ -1,0 +1,29 @@
+---
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Tag from "@components/Tag.astro";
+import getUniqueTags from "@utils/getUniqueTags";
+import { SITE } from "@config";
+import { getNotionTags } from "@lib/notion/client";
+import { getNotionCollection } from "@lib/notion/client";
+
+const posts = await getNotionCollection();
+
+const notionTags = await getNotionTags();
+
+const tags = [...getUniqueTags(posts), ...notionTags].filter(
+  (value, index, array) => array.map(t => t.tag).indexOf(value.tag) === index
+);
+---
+
+<Layout title={`Tags | ${SITE.title}`}>
+  <Header activeNav="tags" />
+  <Main pageTitle="Tags" pageDesc="All the tags used in posts.">
+    <ul>
+      {tags.map(({ tag }) => <Tag {tag} size="lg" />)}
+    </ul>
+  </Main>
+  <Footer />
+</Layout>

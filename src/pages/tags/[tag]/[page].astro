@@ -1,0 +1,60 @@
+---
+import { type CollectionEntry } from "astro:content";
+import TagPosts from "@layouts/TagPosts.astro";
+import getPostsByTag from "@utils/getPostsByTag";
+import getPageNumbers from "@utils/getPageNumbers";
+import getPagination from "@utils/getPagination";
+import {
+  getNotionCollection,
+  getNotionPostsByTag,
+  getNotionTags,
+} from "@lib/notion/client";
+
+export interface Props {
+  post: CollectionEntry<"blog">;
+  tag: string;
+  tagName: string;
+}
+
+export async function getStaticPaths() {
+  // Astro
+  // const posts = await getCollection("blog");
+  // const tags = getUniqueTags(posts);
+
+  // Notion
+  const notionPosts = await getNotionCollection();
+  const notionTags = await getNotionTags();
+
+  // Combine
+  const allPosts = notionPosts;
+  const allTags = notionTags.filter(
+    (value, index, array) => array.map(t => t.tag).indexOf(value.tag) === index
+  );
+
+  return allTags.flatMap(({ tag, tagName }) => {
+    const tagPosts = getPostsByTag(allPosts, tag);
+    const totalPages = getPageNumbers(tagPosts.length);
+
+    return totalPages.map(page => ({
+      params: { tag, page },
+      props: { tag, tagName },
+    }));
+  });
+}
+
+const { page } = Astro.params;
+const { tag, tagName } = Astro.props;
+
+const posts = await getNotionCollection();
+
+const postsByTag = getPostsByTag(posts, tag);
+const notionPostsByTag = await getNotionPostsByTag(tagName);
+
+const allPostsByTag = [...postsByTag, ...notionPostsByTag];
+const pagination = getPagination({
+  posts: allPostsByTag,
+  page,
+});
+---
+
+<TagPosts {...pagination} {tag} {tagName} />
