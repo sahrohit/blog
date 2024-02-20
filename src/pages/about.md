@@ -3,34 +3,16 @@ layout: ../layouts/AboutLayout.astro
 title: "About"
 ---
 
-AstroPaper is a minimal, responsive and SEO-friendly Astro blog theme. I designed and crafted this based on [my personal blog](https://satnaing.dev/blog).
 
-This theme is aimed to be accessible out of the box. Light and dark mode are supported by
-default and additional color schemes can also be configured.
+## I am Rohit Kumar Sah
 
-This theme is self-documented \_ which means articles/posts in this theme can also be considered as documentations. So, see the documentation for more info.
+I am a computer engineer skilled in front end designs, backend architecture, and data science especially data visualization. Committed to delivering innovative and seamless solution to make lives easier.
 
-<div>
-  <img src="/assets/dev.svg" class="sm:w-1/2 mx-auto" alt="coding dev illustration">
-</div>
+For several years, I have been immersed in learning web design and am currently focused on optimizing web technologies for performance and accessibility, aiming to make them accessible to all users.
+Because, optimization saves resources.
 
-## Tech Stack
+Defending users against poor UI/UX design since 2020.
 
-This theme is written in vanilla JavaScript (+ TypeScript for type checking) and a little bit of ReactJS for some interactions. TailwindCSS is used for styling; and Markdown is used for blog contents.
+Powered by VS Code and coffee.
 
-## Features
-
-Here are certain features of this site.
-
-- fully responsive and accessible
-- SEO-friendly
-- light & dark mode
-- fuzzy search
-- super fast performance
-- draft posts
-- pagination
-- sitemap & rss feed
-- highly customizable
-
-If you like this theme, you can star/contribute to the [repo](https://github.com/satnaing/astro-paper).  
-Or you can even give any feedback via my [email](mailto:contact@satnaing.dev).
+If you wanna have coffee with me sometime feel free to message me on any of my social media or shoot me an [email](mailto:sahrohit9586@gmail.com) or tag a pigeon with your message and send it my way.

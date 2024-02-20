@@ -86,7 +86,7 @@ export async function getAllPosts(): Promise<Post[]> {
           },
         },
         {
-          property: "Date",
+          property: "Created At",
           date: {
             on_or_before: new Date().toISOString(),
           },
@@ -95,7 +95,7 @@ export async function getAllPosts(): Promise<Post[]> {
     },
     sorts: [
       {
-        property: "Date",
+        property: "Created At",
         direction: "descending",
       },
     ],
@@ -125,6 +125,7 @@ export async function getAllPosts(): Promise<Post[]> {
     );
 
     results = results.concat(res.results);
+    console.log("Results", results[0]);
 
     if (!res.has_more) {
       break;
@@ -919,7 +920,9 @@ async function _getSyncedBlockChildren(block: Block): Promise<Block[]> {
 function _validPageObject(pageObject: responses.PageObject): boolean {
   const prop = pageObject.properties;
   return (
-    !!prop.Name.title && prop.Name.title.length > 0 && !!prop.Date.created_time
+    !!prop.Name.title &&
+    prop.Name.title.length > 0 &&
+    !!prop["Created At"].created_time
   );
 }
 
@@ -979,7 +982,8 @@ function _buildPost(pageObject: responses.PageObject): Post {
     Slug: prop.Slug.rich_text
       ? prop.Slug.rich_text.map(richText => richText.plain_text).join("")
       : slugifyStr(title),
-    Date: prop.Date.created_time ?? "",
+    CreatedAt: prop["Created At"].created_time ?? "",
+    UpdatedAt: prop["Updated At"].last_edited_time ?? "",
     Tags: prop.Tags.multi_select ? prop.Tags.multi_select : [],
     Excerpt:
       prop.Excerpt.rich_text && prop.Excerpt.rich_text.length > 0

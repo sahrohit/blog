@@ -88,7 +88,7 @@ const layoutProps = {
     </article>
 
     <ul class="my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} />)}
+      {tags.map((tag: string) => <Tag tag={slugifyStr(tag)} />)}
     </ul>
 
     <PostRelativeLink prevPost={prevPost} nextPost={nextPost} />
