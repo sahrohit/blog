@@ -6,6 +6,7 @@ import remarkCollapse from "remark-collapse";
 import sitemap from "@astrojs/sitemap";
 import partytown from "@astrojs/partytown";
 import { SITE } from "./src/config";
+import PublicNotionCopier from "./src/integrations/public-notion-copier";
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,6 +22,7 @@ export default defineConfig({
         forward: ["dataLayer.push"],
       },
     }),
+    PublicNotionCopier(),
   ],
   markdown: {
     remarkPlugins: [

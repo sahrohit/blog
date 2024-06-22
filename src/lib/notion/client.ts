@@ -125,7 +125,6 @@ export async function getAllPosts(): Promise<Post[]> {
     );
 
     results = results.concat(res.results);
-    console.log("Results", results[0]);
 
     if (!res.has_more) {
       break;
