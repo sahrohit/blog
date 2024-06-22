@@ -1,9 +1,10 @@
 ---
 import { LOCALE, SITE } from "@config";
+import {
+  GA_MEASUREMENT_ID
+} from "../server-constants"
 import "@styles/base.css";
 import { ViewTransitions } from "astro:transitions";
-
-const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 export interface Props {
   title?: string;
@@ -97,7 +98,7 @@ const socialImageURL = new URL(
     <script
       type="text/partytown"
       async
-      src="https://www.googletagmanager.com/gtag/js?id=G-0QLS87Y0SB"></script>
+      src=`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`></script>
     <script type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -105,7 +106,7 @@ const socialImageURL = new URL(
       }
       gtag("js", new Date());
 
-      gtag("config", "G-0QLS87Y0SB");
+      gtag("config", GA_MEASUREMENT_ID);
     </script>
 
     <ViewTransitions />

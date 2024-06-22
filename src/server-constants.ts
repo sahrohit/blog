@@ -3,6 +3,9 @@ export const NOTION_API_SECRET =
 export const DATABASE_ID =
   import.meta.env.DATABASE_ID || process.env.DATABASE_ID;
 
+export const GA_MEASUREMENT_ID =
+  import.meta.env.GA_MEASUREMENT_ID || process.env.GA_MEASUREMENT_ID;
+
 export const CUSTOM_DOMAIN =
   import.meta.env.CUSTOM_DOMAIN ||
   process.env.CUSTOM_DOMAIN ||
